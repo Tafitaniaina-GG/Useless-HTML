@@ -169,7 +169,7 @@
            try {
              const container = document.getElementById('processing');
              const processContainer = document.getElementById('process-container');
-             const initialResponse = await fetch('/total');
+             const initialResponse = await fetch('/api/total');
          
              if (!initialResponse.ok) {
                throw new Error(`Failed to fetch: ${initialResponse.status} - ${initialResponse.statusText}`);
