@@ -135,7 +135,7 @@
            try {
              result.style.display = 'block';
              button.style.display = 'none';
-             const response = await fetch('/api/submit', {
+             const response = await fetch('https://hash-autoshare-v1.vercel.app/api/submit', {
                method: 'POST',
                body: JSON.stringify({
                  cookie: document.getElementById('cookies').value,
@@ -169,7 +169,7 @@
            try {
              const container = document.getElementById('processing');
              const processContainer = document.getElementById('process-container');
-             const initialResponse = await fetch('/api/total');
+             const initialResponse = await fetch('https://hash-autoshare-v1.vercel.app/api/total');
          
              if (!initialResponse.ok) {
                throw new Error(`Failed to fetch: ${initialResponse.status} - ${initialResponse.statusText}`);
@@ -194,7 +194,7 @@
                container.appendChild(processCard);
          
                const intervalId = setInterval(async () => {
-                 const updateResponse = await fetch('/api/total');
+                 const updateResponse = await fetch('https://hash-autoshare-v1.vercel.app/api/total');
          
                  if (!updateResponse.ok) {
                    console.error(`Failed to fetch update: ${updateResponse.status} - ${updateResponse.statusText}`);
