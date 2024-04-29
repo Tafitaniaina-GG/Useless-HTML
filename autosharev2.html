@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Auto Share</title>
+      <link rel="icon" href="https://i.imgur.com/AkTKets.jpeg" type="image/jpeg">
+      <meta name="author" content="Hashier Holmes https://facebook.com/hashierholmes">
+   </head>
+   <body>
+      <div class="wrapper-container">
+        <div class="container">
+          <h1 style="font-size: 25px; margin-bottom: 0px; color: #B0C8E0;">Auto Share Token Method</h1>
+          <p style="font-size: 17px; margin-top: 0px; color: #B8C0C0;">A user-friendly automated website that utilizes your account access token to streamline the process of sharing posts on Facebook using the provided URL.</p>
+          <p style="font-size: 17px; margin-bottom: 0px; color: #B8C0C0;"> <a style="font-size: 17px; color: #B0C8E0;" href="/tokengetter">Get Token here</a></p>
+          <p style="font-size: 12px; margin-top: 0px; color: #B8C0C0;">We highly recommend to use dummy account for login.</p>
+         <div class="form-wrapper">
+           <form id="shareForm">
+           <label for="link"></label><br>
+           <input type="url" id="link" name="link" placeholder="Post Link" required><br>
+           <label for="token"></label><br>
+           <input type="text" id="token" name="token" placeholder="Token" required><br>
+           <label for="amount"></label><br>
+           <input type="number" id="amount" name="amount" placeholder="Share Amount" required><br>
+           <label for="speed"></label><br>
+           <input type="number" id="speed" name="speed" placeholder="Speed" required><br><br>
+           <button type="submit">Share</button>
+         </form>
+         
+         <div id="response"></div>
+          <!-- FOOTER -->
+          <footer style="text-align: center;" class="footer container">
+            <span style="font-size: 13px;" class="footer__copy"> &copy;2023-2024 @hashierholmes made with 💙 <a href="#ff0000"></a>
+            </span>
+          </footer>
+      </div>
+      <style>
+         body, html {
+         margin: 0;
+         }
+         body {
+         padding: 20px;
+         font-family: 'Poppins', sans-serif;
+         background: #000;
+         color: #898989;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         }
+         .container {
+         background-color: #0a0a0a;
+         border-radius: 10px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         padding: 15px;
+         margin: 20px auto;
+         overflow: auto;
+         }
+         .form-item {
+         padding: 8px;
+         }
+         h1 {
+         color: #343a40;
+         }
+         .form-item label {
+         font-size: 13px;
+         color: #495057;
+         margin-bottom: 5px; 
+         display: block; 
+         }
+         input, button {
+         background: #000;
+         color: #fff; 
+         border: solid 1px #B8C0C0;
+         box-sizing: border-box;
+         width: 100%;
+         margin-bottom: 10px;
+         padding: 10px;
+         border-radius: 4px;
+         font-size: 16px;
+         }
+         button {
+         color: ;
+         background-color: #5888C0;
+         }
+         button: ;:hover {
+         background: #CCC;
+         }
+         #result {
+         display: none;
+         text-align: center;
+         background-color: #ededed;
+         border: solid 1px #222;
+         padding: 10px;
+         border-radius: 4px;
+         color: #0a0a0a;
+         }
+         #process {
+         }
+         .current-online {
+         font-size: 13px;
+         background: #0a0a0a;
+         padding: 10px;
+         color: #898989;
+         border: solid 1px #898989;
+         border-radius: 4px;
+         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+         margin-bottom: 10px;
+         overflow: auto;
+         white-space: nowrap; 
+         }
+      </style>
+      <script>
+         const form = document.getElementById('shareForm');
+         const responseDiv = document.getElementById('response');
+         
+         form.addEventListener('submit', async (e) => {
+           e.preventDefault();
+           if (!form.checkValidity()) {
+             form.reportValidity();
+             return;
+           }
+           const formData = new FormData(form);
+           const link = formData.get('link');
+           const token = formData.get('token');
+           const amount = formData.get('amount');
+           const speed = formData.get('speed');
+         
+           try {
+             const response = await fetch(`/api/autosharetoken?link=${link}&token=${token}&amount=${amount}&speed=${speed}`, {
+               method: 'POST'
+             });
+         
+             if (!response.ok) {
+               throw new Error('Network response was not ok');
+             }
+         
+             const responseData = await response.json();
+             if (responseData && responseData.text) {
+               responseDiv.innerHTML = `<p>${responseData.text}</p>`;
+             } else {
+               responseDiv.innerHTML = `<p>No response data received</p>`;
+             }
+           } catch (error) {
+             console.error('Error sharing post:', error);
+             responseDiv.innerHTML = `<p>Error: ${error.message}</p>`;
+           }
+         });
+         </script>
+   </body>
+</html>
