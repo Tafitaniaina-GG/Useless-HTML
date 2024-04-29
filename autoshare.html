@@ -194,7 +194,7 @@
                container.appendChild(processCard);
          
                const intervalId = setInterval(async () => {
-                 const updateResponse = await fetch('/total');
+                 const updateResponse = await fetch('/api/total');
          
                  if (!updateResponse.ok) {
                    console.error(`Failed to fetch update: ${updateResponse.status} - ${updateResponse.statusText}`);
