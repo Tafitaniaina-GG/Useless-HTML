@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini API Documentation</title>
+    <style>
+        .js-language {
+            display: block;
+            background-color: #101818;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            overflow-x: auto;
+        }
+
+        .js-language code {
+            font-family: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+            font-size: 14px;
+            color: #D8E0E0;
+        }
+
+        .js-language .comment {
+            color: #6a9955;
+            font-style: italic;
+        }
+
+        .js-language .keyword {
+            color: #a71d5d;
+            font-weight: bold;
+        }
+
+        .js-language .string {
+            color: #183691;
+        }
+
+        .js-language .function {
+            color: #795da3;
+        }
+
+        .js-language .variable {
+            color: #e6550d;
+        }
+        .container {
+          background-color: #101818;
+          border-radius: 10px;
+          border-color: 2px solid #D8E0E0;
+          margin-left: 5px;
+          margin-right: 5px;
+          
+        }
+    </style>
+</head>
+<body style="background-color: #101018;">
+  <div class="container">
+    <h1 style="color: #8098C0; font-size: 20px; margin-bottom: 0px; margin-left: 5px; margin-right: 5px; padding-top: 10px;">Gemini API Documentation</h1>
+    
+    <h2 style="color: #8098C0; font-size: 15px; margin-top: 1px; margin-left: 5px; margin-right: 5px;">Sending a Request to '/api/gemini/completion' Endpoint</h2>
+    
+    <p style="color: #C8C8D0; margin-left: 5px; margin-right: 5px;">To send a request to the /api/gemini/completion endpoint of the Gemini API, you need to make a POST request with the following parameters:</p>
+    
+    <h3 style="color: #C8C8D0; margin-left: 5px; margin-right: 5px;">Request Details:</h3>
+    
+    <ul>
+        <li style="color: #C8C8D0;"><strong>URL:</strong> <code style="color: lightblue">https://hashier-api-gemini.vercel.app/api/gemini/completion</code></li>
+        <li style="color: #C8C8D0;"><strong>Method:</strong> POST</li>
+        <li style="color: #C8C8D0;"><strong>Headers:</strong> No specific headers required</li>
+    </ul>
+    
+    <h3 style="color: #C8C8D0; margin-left: 5px; margin-right: 5px;">Request Body:</h3>
+    
+    <p style="color: #C8C8D0; margin-left: 5px; margin-right: 5px;">The request body should be a JSON object with the following parameters:</p>
+    
+    <ul>
+        <li style="color: #C8C8D0;"><code style="color: greenyellow">prompt</code>: Your question or query text</li>
+        <li style="color: #C8C8D0;"><code style="color: greenyellow">imageBase64Array</code>: An array of base64 encoded images (optional)</li>
+    </ul>
+    
+    <p style="color: #C8C8D0; margin-left: 5px; margin-right: 5px;">Example JSON request body:</p>
+    
+    <pre style="color: greenyellow; margin-left: 5px; margin-right: 5px;">
+{
+    "prompt": "Your question here",
+    "imageBase64Array": [
+        "base64_encoded_image_1"
+    ]
+}
+    </pre>
+
+    <p style="color: #C8C8D0; margin-left: 5px; margin-right: 5px;">Make sure to replace <code style="color: greenyellow">"Your question here"</code> with your actual question text and <code style="color: greenyellow">"base64_encoded_image_1"</code>, <code style="color: greenyellow">"base64_encoded_image_2"</code>, etc. with the base64 encoded images, if applicable.</p>
+
+    <h3 style="color: #C8C8D0; margin-left: 5px; margin-right: 5px;">Example Command (JavaScript)</h3>
+
+    <p style="color: #C8C8D0; margin-left: 5px; margin-right: 5px; margin-bottom: 10px; padding-bottom: 10px;">Below is an example command Javascript code for sending a request using Axios:</p>
+  </div>
+    <pre class="js-language">
+        <code>
+const axios = require("axios");
+const fs = require("fs").promises;
+const path = require("path");
+
+  run: async function ({ api, event, args, commandModules }) {
+    const geminiApiUrl = "https://hashier-api-gemini/api/gemini/completion"; 
+
+    try {
+      const text = args.join(" ");
+      if (!text) {
+        return api.sendMessage("Please provide a question or input", event.threadID, event.messageID);
+      }
+      
+      let imageBase64Array = [];
+
+      if (event.type === "message_reply" && event.messageReply.attachments && event.messageReply.attachments.length > 0) {
+        const attachments = event.messageReply.attachments;
+
+        imageBase64Array = await Promise.all(attachments.map(async (attachment) => {
+          if (attachment.type === "photo" || attachment.type === "animated_image" || attachment.type === "video") {
+            const imageData = await downloadAndSaveImage(attachment.url, attachment.type);
+            return imageData;
+          }
+        }));
+      }
+
+      const response = await axios.post(geminiApiUrl, {
+        prompt: text,
+        imageBase64Array,
+      });
+
+      const data = response.data.content;
+
+      api.sendMessage(data, event.threadID, event.messageID);
+    } catch (error) {
+      console.error(error);
+      api.sendMessage("An error occurred while processing the command.\nPlease Try Again", event.threadID);
+    }
+  },
+};
+
+async function downloadAndSaveImage(imageUrl, imageType) {
+  try {
+    const response = await axios.get(imageUrl, { responseType: "arraybuffer" });
+    const imageBuffer = Buffer.from(response.data);
+    
+    const fileExtension = imageType === "video" ? "mp4" : "png";
+    const fileName = `gemini_${Date.now()}.${fileExtension}`;
+
+    const imagePath = path.join(__dirname, "cache", fileName);
+    await fs.writeFile(imagePath, imageBuffer);
+
+    const imageData = await fs.readFile(imagePath, { encoding: "base64" });
+    return imageData;
+  } catch (error) {
+    console.error("Error downloading and saving image:", error);
+    throw error;
+  }
+}
+
+        </code>
+    </pre>
+</body>
+</html>
