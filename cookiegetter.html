@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cookie Getter</title>
+    <title>Appstate Getter</title>
     <link rel="icon" href="https://i.imgur.com/AkTKets.jpeg" type="image/jpeg">
     <meta name="author" content="Hashier Holmes https://facebook.com/hashierholmes">
     <meta name="description" content="AIO WebTool is an All In One API crafted by Hashier Holmes. Explore its versatile functionalities for all your project needs.">
@@ -134,7 +134,7 @@
 
     <div class="wrapper-container">
        <div class="container">
-        <h2 style="text-align: center; color: #B0C8E0;" >Cookie Getter</h2>
+        <h2 style="text-align: center; color: #B0C8E0;" >Appstate Getter</h2>
         <form id="loginForm">
             <label for="email"></label>
             <input type="text" id="email" name="email" placeholder="Email / Username / UID" required><br>
@@ -171,7 +171,7 @@ document.getElementById("copy-button").style.display = "none";      document.get
             });
 
             const result = await response.json();
-            const appstate = result.cookie;
+            const appstate = result.appstate;
             document.getElementById('resultCode').innerText = JSON.stringify(appstate, null, 2);
             document.getElementById("copy-button").style.display = "block"; });
 
