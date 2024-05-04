@@ -1,56 +1,44 @@
-<!DOCTYPE html>
+
+ <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Token Getter</title>
-    <link rel="icon" href="https://i.imgur.com/AkTKets.jpeg" type="image/jpeg">
-    <meta name="author" content="Hashier Holmes https://facebook.com/hashierholmes">
-    <meta name="description" content="AIO WebTool is an All In One API crafted by Hashier Holmes. Explore its versatile functionalities for all your project needs.">
-    <meta property="og:image" content="https://i.imgur.com/AkTKets.jpeg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
     <style>
         body {
-           padding: 20px;
-           font-family: 'Poppins', sans-serif;
-           background-color: #182028;
-           color: #000000FF;
-           display: flex;
-           justify-content: center;
-           align-items: center;
+          padding: 20px;
+          background-color: whitesmoke;
+          font-family: 'Poppins', sans-serif;
         }
 
         #particles-js {
             position: fixed;
             width: 100%;
             height: 100%;
-            background-color: #182028; /* Black background color */
+            background-color: whitesmoke; /* Black background color */
             z-index: -1;
         }
 
         .container {
-            position: absolute;
-            top: 50%;
-            border: 0.5px solid #B0C8E0;
-            left: 50%;
-            transform: translate(-50%, -50%);
             text-align: center;
             z-index: 1;
             border-radius: 10px;
             padding: 18px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Subtle box shadow */
             max-width: 400px;
-            width: 80%;
-            margin: 20px auto;
-            background-color: #101018;
+            margin-top: 30px;
+            width: 100%;
+            background-color: whitesmoke;
         }
 
         .container h1 {
             margin-bottom: 30px;
-            color: #B0C8E0; /* White color */
+            color: #000000; /* White color */
             font-weight: 500;
             text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
@@ -72,36 +60,41 @@
             margin-bottom: 20px;
             width: calc(100% - 24px);
             border-radius: 5px;
-            border: 0.5px solid #B0C8E0; /* Light gray border */
+            border: 1px solid #cccccc; /* Light gray border */
             box-sizing: border-box;
             font-size: 16px; /* Increased font size */
             outline: none;
-            background-color: #101018; /* Transparent background */
-            color: #B0C8E0; /* White color */
+            background-color: transparent; /* Transparent background */
+            color: #000000; /* White color */
             transition: border-color 0.3s ease; /* Smooth transition for border color */
         }
 
+        .container form input::placeholder {
+            color: #a39e9e; /* Placeholder color */
+        }
+
+        .container form input:hover {
+            border-color: #171616; /* White border color on hover */
+        }
 
         .container form button {
             padding: 12px 20px;
-            background-color: #5888C0;
+            background-color: skyblue;
             color: #ffffff;
             border: none;
             border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-            width: calc(100% - 24px);
+            width: 100%;
             font-size: 16px; /* Increased font size */
         }
 
         .container form button:hover {
-            background-color: #7090B0; /* Darker blue color on hover */
+            background-color: deepskyblue; /* Darker blue color on hover */
         }
 
         #result {
             margin-top: 20px;
             font-weight: 500;
-            color: #B0C8E0;
+            color: #ffffff; /* White color */
             text-align: left;
         }
 
@@ -109,9 +102,9 @@
             max-height: 300px;
             overflow: auto;
             padding: 10px;
-            background-color: #101018;
+            background-color: #f9f9f9;
             border-radius: 5px;
-            border: 0.5px solid #B0C8E0;
+            border: 1px solid #ccc;
             margin-top: 20px;
             text-align: left;
         }
@@ -124,30 +117,53 @@
         .code-container code {
             display: block;
             padding: 10px;
-            background-color: #101018;
-            color: #B0C8E0;
+            background-color: #f9f9f9;
+            color: #333;
         }
     </style>
 </head>
 <body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <mark style="background-color: skyblue; font-weight: bold; color: white;" class="navbar-brand" href="#">Home</mark>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav" style="margin-right: 70px;">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="https://hashier-appstate-getter.vercel.app/api/appstate">Appstate Getter<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="https://hashier-token-getter.vercel.app/api/token">Token Getter<span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="https://facebook.com/hashierholmes">Contact Developer <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
     <div id="particles-js"></div>
 
     <div class="wrapper-container">
        <div class="container">
-        <h2 style="text-align: center; color: #B0C8E0;" >Token Getter</h2>
+        <h2 style="color: grey; font-size: 20px;">TOKEN GETTER</h2>
+
         <form id="loginForm">
             <label for="email"></label>
-            <input type="text" id="email" name="email" placeholder="Email / Username / UID" required><br>
+            <input type="text" id="email" name="email" placeholder="Username / Email / UID" required><br>
 
             <label for="password"></label>
             <input type="password" id="password" name="password" placeholder="Password" required><br>
 
-            <label style="color: #B0C8E0" for="twofactor">OPTIONAL</label>
+            <label style="color: grey" for="twofactor">OPTIONAL</label>
             <input type="text" id="twofactor" name="twofactor" placeholder="_2FA"><br>
 
             <button type="submit">Login</button>
+            <p style="color: lightcoral; font-size: 11px; text-align: center; margin-top: 10px;">We highly recommend to use dummy account for login.</p>
         </form>
-
         <div id="result" class="code-container">
             <pre><code id="resultCode"></code></pre>
         </div>
@@ -171,8 +187,7 @@ document.getElementById("copy-button").style.display = "none";      document.get
             });
 
             const result = await response.json();
-            const appstate = result.token;
-            document.getElementById('resultCode').innerText = appstate;
+            document.getElementById('resultCode').innerText = result;
 document.getElementById("copy-button").style.display = "block";
         });
 
@@ -186,5 +201,9 @@ document.getElementById("copy-button").addEventListener("click", function() {
   });
 });
     </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/js/all.min.js"></script>
 </body>
 </html>
