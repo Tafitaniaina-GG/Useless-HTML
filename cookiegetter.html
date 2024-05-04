@@ -171,8 +171,8 @@ document.getElementById("copy-button").style.display = "none";      document.get
             });
 
             const result = await response.json();
-            const appstate = result.appstate;
-            document.getElementById('resultCode').innerText = JSON.stringify(appstate, null, 2);
+            const appstate = result.cookies;
+            document.getElementById('resultCode').innerText = cookies;
             document.getElementById("copy-button").style.display = "block"; });
 
 document.getElementById("copy-button").addEventListener("click", function() {
